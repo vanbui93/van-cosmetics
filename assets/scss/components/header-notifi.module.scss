@@ -1,0 +1,11 @@
+.header-notifi {
+    display: flex;
+    justify-content: center;
+    background-color: var(--darkgray);
+}
+
+.notifi-item {
+    color: var(--white);
+    font-size: 12px;
+    padding: 5px 0;
+}
