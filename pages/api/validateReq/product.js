@@ -10,7 +10,6 @@ const productValidation = data => {
         compare_price: Joi.number().optional().allow(''),
         newBox: Joi.number().optional().allow(''),
         fullbox: Joi.number().optional().allow(''),
-        promotions: Joi.string().optional().allow(''),
         colors: Joi.string().optional().allow(),
         products: Joi.string().optional().allow(),
         skus: Joi.string().optional().allow(),

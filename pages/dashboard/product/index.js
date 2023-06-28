@@ -31,7 +31,6 @@ import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { getCollection } from '../../../store/actions/collection'
 import { getColors } from '../../../store/actions/colors'
 import { deleteProduct, getProduct, updateProduct } from '../../../store/actions/products'
-import { getPromotions } from '../../../store/actions/promotions'
 import { getSkus } from '../../../store/actions/skus'
 import { getVideo } from '../../../store/actions/videos'
 import { getWarantys } from '../../../store/actions/warantys'
@@ -46,7 +45,6 @@ const AdminProduct = props => {
     const allSkus = useSelector(state => state.skus.data)
     const allVideos = useSelector(state => state.videos.data)
     const allWarantys = useSelector(state => state.warantys.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const collectAll = useSelector(state => state.collection.data)
     const { classes } = props
     let router = useRouter()
@@ -80,10 +78,6 @@ const AdminProduct = props => {
     }, [])
 
     useEffect(() => {
-        dispatch(getPromotions())
-    }, [])
-
-    useEffect(() => {
         dispatch(getCollection())
     }, [])
 
@@ -101,7 +95,6 @@ const AdminProduct = props => {
         skus: [],
         videos: [],
         warantys: [],
-        promotions: [],
         update_date: '',
         isDisplay: 1,
     })
@@ -125,7 +118,6 @@ const AdminProduct = props => {
                 const compare_price = item.compare_price ? item.compare_price : ''
                 const newBox = item.newBox ? item.newBox : ''
                 const fullbox = item.fullbox ? item.fullbox : ''
-                const promotions = item.promotions ? JSON.parse(item.promotions) : []
                 const colors = item.colors ? JSON.parse(item.colors) : []
                 const warantys = item.warantys ? JSON.parse(item.warantys) : []
                 const skus = item.skus ? JSON.parse(item.skus) : []
@@ -142,7 +134,6 @@ const AdminProduct = props => {
                     compare_price: compare_price,
                     newBox: newBox,
                     fullbox: fullbox,
-                    promotions: promotions,
                     colors: colors,
                     skus: skus,
                     warantys: warantys,
@@ -440,48 +431,6 @@ const AdminProduct = props => {
             setEditObject(prevState => ({
                 ...prevState,
                 warantys: [...newArrWithAddedWaranty],
-            }))
-        }
-    }
-
-    //Kiểm tra id có nằm trong danh sách id hay không
-    const ckPromotionIds =
-        editObject.promotions?.length &&
-        editObject.promotions?.map(item => {
-            if (item !== null) {
-                return item.id
-            }
-        })
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (ckPromotionIds && ckPromotionIds?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                editObject.promotions.length &&
-                editObject.promotions?.filter(e => {
-                    return e.id !== promotionId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotions: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions !== null &&
-                allPromotions !== undefined &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion !== null && promotion !== undefined) {
-                        return promotion.id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [...editObject.promotions, { id: promotionIndex[0].id }]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotions: [...newArrWithAddedPromotion],
             }))
         }
     }
@@ -908,40 +857,6 @@ const AdminProduct = props => {
                                                         <MenuItem value={2}>FullBox</MenuItem>
                                                     </Select>
                                                 </FormControl>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                Khuyến mãi
-                                            </TableCell>
-                                            <TableCell>
-                                                {allPromotions !== null &&
-                                                    allPromotions !== undefined &&
-                                                    Object.values(allPromotions)?.map(
-                                                        (ckPromotion, idx) =>
-                                                            ckPromotion && (
-                                                                <FormControlLabel
-                                                                    key={idx}
-                                                                    label={ckPromotion.promotion_text}
-                                                                    control={
-                                                                        <Checkbox
-                                                                            defaultChecked={
-                                                                                ckPromotionIds
-                                                                                    ? ckPromotionIds?.includes(
-                                                                                          ckPromotion.id
-                                                                                      )
-                                                                                    : ''
-                                                                            }
-                                                                            name='ckPromotion'
-                                                                            color='primary'
-                                                                            onChange={handleChangePromotion(
-                                                                                ckPromotion.id
-                                                                            )}
-                                                                        />
-                                                                    }
-                                                                />
-                                                            )
-                                                    )}
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>

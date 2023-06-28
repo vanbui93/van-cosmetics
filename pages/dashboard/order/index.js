@@ -28,7 +28,6 @@ import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_co
 import DiaLogPopup from './../../../admin_components/DiaLogPopup'
 import PaginationButtons from './../../../admin_components/Pagination'
 import { deleteOrder, getOrder, updateOrder } from './../../../store/actions/order'
-import { getPromotions } from './../../../store/actions/promotions'
 import { numberInputFormat } from './../../../utils/numberInputFormat'
 import styles from './styles'
 
@@ -36,7 +35,6 @@ const AdminOrder = props => {
     //get state from redux
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const orders = useSelector(state => state.order.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const { classes } = props
 
     const [searchTerm, setSearchTerm] = useState('')
@@ -45,10 +43,6 @@ const AdminOrder = props => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getOrder())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
     }, [])
 
     const [isView, setIsView] = useState(false)
@@ -61,7 +55,6 @@ const AdminOrder = props => {
         address: '',
         city: '',
         name: '',
-        promotion: [],
         img: '',
         price: '',
         collection: '',
@@ -83,7 +76,6 @@ const AdminOrder = props => {
         product_price: '',
         sku: '',
         color: '',
-        promotion: [],
         product_newBox: '',
         product_fullbox: '',
     })
@@ -104,7 +96,6 @@ const AdminOrder = props => {
                 const productFullBox = item.product_fullbox ? item.product_fullbox : ''
                 const productColor = item.color ? item.color : ''
                 const productType = item.sku ? item.sku : ''
-                const promotion = item.promotion ? JSON.parse(item.promotion) : []
                 const name = item.customer_name ? item.customer_name : ''
                 const phone = item.customer_phone ? item.customer_phone : ''
                 const email = item.customer_email ? item.customer_email : ''
@@ -122,7 +113,6 @@ const AdminOrder = props => {
                     product_fullbox: productFullBox,
                     sku: productType,
                     color: productColor,
-                    promotion: promotion,
                     cusName: name,
                     phone: phone,
                     email: email,
@@ -218,56 +208,6 @@ const AdminOrder = props => {
         setIsEdit(false)
     }
 
-    //Lọc khuyến mãi từ bảng promotion dựa trên id
-    const ckPromotionId =
-        editObject.promotion?.length > 0 &&
-        editObject.promotion?.map(item => {
-            if (item !== null) {
-                return Number(item.id)
-            }
-        })
-
-    const ckPromoViewId =
-        viewObject.promotion?.length &&
-        viewObject.promotion?.map(item => {
-            if (item !== null) {
-                return Number(item.id)
-            }
-        })
-
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (ckPromotionId && ckPromotionId?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                editObject.promotion.length &&
-                editObject.promotion?.filter(e => {
-                    return e.id !== promotionId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotion: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm promotion_id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion) {
-                        return promotion.id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [...editObject.promotion, { id: promotionIndex[0].id }]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotion: [...newArrWithAddedPromotion],
-            }))
-        }
-    }
-
     const handleEditOrder = order => {
         setIsEdit(true)
         setEditObject({
@@ -283,7 +223,6 @@ const AdminOrder = props => {
             product_price: order.price ? order.price : '',
             sku: order.sku ? order.sku : '',
             color: order.color ? order.color : '',
-            promotion: order.promotion,
             product_newBox: order.newBox,
             product_fullbox: order.product_fullbox,
         })
@@ -321,7 +260,6 @@ const AdminOrder = props => {
                 price: editObject.product_price,
                 sku: editObject.sku,
                 color: editObject.color,
-                promotion: editObject.promotion,
                 newBox: editObject.product_newBox,
                 product_fullbox: editObject.product_fullbox,
             })
@@ -541,30 +479,6 @@ const AdminOrder = props => {
                                                 ) : (
                                                     ''
                                                 )}
-                                                {ckPromoViewId ? (
-                                                    <TableRow>
-                                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                            Khuyến mãi
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <ul>
-                                                                {allPromotions !== null &&
-                                                                    allPromotions !== undefined &&
-                                                                    Object.values(allPromotions)?.map((item, idx) => {
-                                                                        if (ckPromoViewId?.includes(item.id)) {
-                                                                            return (
-                                                                                <li key={idx}>
-                                                                                    - {item.promotion_text}
-                                                                                </li>
-                                                                            )
-                                                                        }
-                                                                    })}
-                                                            </ul>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ) : (
-                                                    ''
-                                                )}
                                                 <TableRow>
                                                     <TableCell className={classes.tbHeadLeft} variant='head'>
                                                         Hình sản phẩm
@@ -744,41 +658,6 @@ const AdminOrder = props => {
                                                             name='color'
                                                             onChange={handleEditOnchage}
                                                         />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Khuyến mãi
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {allPromotions !== null &&
-                                                            allPromotions !== undefined &&
-                                                            Object.values(allPromotions)?.map((ckPromotion, idx) => {
-                                                                return (
-                                                                    ckPromotion && (
-                                                                        <FormControlLabel
-                                                                            key={idx}
-                                                                            label={ckPromotion.promotion_text}
-                                                                            control={
-                                                                                <Checkbox
-                                                                                    defaultChecked={
-                                                                                        ckPromotionId
-                                                                                            ? ckPromotionId?.includes(
-                                                                                                  ckPromotion.id
-                                                                                              )
-                                                                                            : false
-                                                                                    }
-                                                                                    name='ckPromotion'
-                                                                                    color='primary'
-                                                                                    onChange={handleChangePromotion(
-                                                                                        ckPromotion.id
-                                                                                    )}
-                                                                                />
-                                                                            }
-                                                                        />
-                                                                    )
-                                                                )
-                                                            })}
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>

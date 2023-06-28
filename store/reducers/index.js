@@ -10,7 +10,6 @@ import orderReducer from './order'
 import pageReducer from './page'
 import productDetailReducer from './productDetail'
 import productReducer from './products'
-import promotionReducer from './promotion'
 import skusReducer from './skus'
 import slideReducer from './slides'
 import storageReducer from './storage'
@@ -34,7 +33,6 @@ const rootReducer = combineReducers({
     skus: skusReducer,
     videos: videosReducer,
     warantys: warantysReducer,
-    promotions: promotionReducer,
     page: pageReducer,
     mediaStorage: storageReducer,
 })

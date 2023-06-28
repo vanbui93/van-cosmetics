@@ -23,7 +23,6 @@ import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { getCollection } from '../../../store/actions/collection'
 import { getColors } from '../../../store/actions/colors'
 import { addProductObject } from '../../../store/actions/products'
-import { getPromotions } from '../../../store/actions/promotions'
 import { getSkus } from '../../../store/actions/skus'
 import { getVideo } from '../../../store/actions/videos'
 import { getWarantys } from '../../../store/actions/warantys'
@@ -37,7 +36,6 @@ const ProductAdd = props => {
     const allSkus = useSelector(state => state.skus.data)
     const allVideos = useSelector(state => state.videos.data)
     const allWarantys = useSelector(state => state.warantys.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const collectAll = useSelector(state => state.collection.data)
     const { classes } = props
     let router = useRouter()
@@ -50,7 +48,6 @@ const ProductAdd = props => {
         collection: '',
         newBox: '',
         fullbox: '',
-        promotions: [],
         colors: [],
         warantys: [],
         skus: [],
@@ -74,10 +71,6 @@ const ProductAdd = props => {
 
     useEffect(() => {
         dispatch(getWarantys())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
     }, [])
 
     useEffect(() => {
@@ -319,48 +312,6 @@ const ProductAdd = props => {
             setAddProduct(prevState => ({
                 ...prevState,
                 warantys: [...newArrWithAddedWaranty],
-            }))
-        }
-    }
-
-    //Kiểm tra id có nằm trong danh sách id hay không
-    const temPromotion =
-        addProduct.promotions?.length &&
-        addProduct.promotions?.map(item => {
-            if (item !== null) {
-                return item.id
-            }
-        })
-
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (temPromotion.length && temPromotion?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                addProduct.promotions.length &&
-                addProduct.promotions?.filter(e => {
-                    return e.id !== promotionId
-                })
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                promotions: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion) {
-                        return promotion.id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [...addProduct.promotions, { id: promotionIndex[0].id }]
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                promotions: [...newArrWithAddedPromotion],
             }))
         }
     }
@@ -616,31 +567,6 @@ const ProductAdd = props => {
                                             <MenuItem value={2}>FullBox</MenuItem>
                                         </Select>
                                     </FormControl>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    Khuyến mãi
-                                </TableCell>
-                                <TableCell>
-                                    {allPromotions !== null &&
-                                        allPromotions !== undefined &&
-                                        Object.values(allPromotions)?.map(
-                                            (ckPromotion, idx) =>
-                                                ckPromotion && (
-                                                    <FormControlLabel
-                                                        key={idx}
-                                                        label={ckPromotion.promotion_text}
-                                                        control={
-                                                            <Checkbox
-                                                                name='promotion'
-                                                                color='primary'
-                                                                onChange={handleChangePromotion(ckPromotion.id)}
-                                                            />
-                                                        }
-                                                    />
-                                                )
-                                        )}
                                 </TableCell>
                             </TableRow>
                             <TableRow>

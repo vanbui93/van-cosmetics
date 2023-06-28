@@ -49,7 +49,6 @@ export default function Collections() {
                                 price={item.price}
                                 comparePrice={item.compare_price}
                                 newPercent={item.newBox}
-                                promotions={item.promotions ? JSON.parse(item.promotions) : ''}
                             />
                         )
                     )

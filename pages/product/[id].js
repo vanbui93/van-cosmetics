@@ -15,7 +15,6 @@ import ProductSlide from './../../components/ProductSlide'
 import VideoReview from './../../components/VideoReview'
 import { getColors } from './../../store/actions/colors'
 import { getProductDetail } from './../../store/actions/productDetail'
-import { getPromotions } from './../../store/actions/promotions'
 import { getSkus } from './../../store/actions/skus'
 import { getVideo } from './../../store/actions/videos'
 import { getWarantys } from './../../store/actions/warantys'
@@ -25,7 +24,6 @@ export default function ProductDetail(props) {
     const [skuInvalid, setSkuInvalid] = useState(false)
     const [colorInvalid, setColorInvalid] = useState(false)
     const detailProduct = useSelector(state => state.product?.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const allColor = useSelector(state => state.colors.data) //lấy từ bảng colors
     const allSku = useSelector(state => state.skus.data) //lấy từ bảng skus
     const allWarantys = useSelector(state => state.warantys.data) //lấy từ bảng warantys
@@ -38,7 +36,6 @@ export default function ProductDetail(props) {
 
     const parseColor = product?.colors ? JSON.parse(product.colors) : ''
     const parseSku = product?.skus ? JSON.parse(product.skus) : ''
-    const parsePromotion = product?.promotions ? JSON.parse(product.promotions) : ''
     const parseWaranty = product?.warantys ? JSON.parse(product.warantys) : ''
     const parseVideo = product?.videos ? JSON.parse(product.videos) : ''
     const parseImage = product?.images ? JSON.parse(product.images) : ''
@@ -63,10 +60,6 @@ export default function ProductDetail(props) {
 
     useEffect(() => {
         dispatch(getWarantys())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
     }, [])
 
     const [skuSelected, setSkuSelected] = useState({})
@@ -175,7 +168,6 @@ export default function ProductDetail(props) {
                             productNewBox: product.newBox ? product.newBox : '',
                             productFullBox: product.fullbox ? product.fullbox : '',
                             productSku: skuSelected ? skuSelected : [],
-                            productPromotion: product.promotions ? JSON.stringify(product.promotions) : '',
                             productColor: colorSelected ? colorSelected : [],
                             productImage: getThumbnail(),
                         },
@@ -195,7 +187,6 @@ export default function ProductDetail(props) {
                         productPrice: product.price ? product.price : '',
                         productNewBox: product.newBox ? product.newBox : '',
                         productFullBox: product.fullbox ? product.fullbox : '',
-                        productPromotion: product.promotions ? JSON.stringify(product.promotions) : [],
                         productImage: getThumbnail(),
                     },
                 },
@@ -203,17 +194,6 @@ export default function ProductDetail(props) {
             )
         }
     }
-
-    const ckPromotionIds =
-        product &&
-        product.promotions?.length &&
-        product.promotions !== null &&
-        product.promotions !== undefined &&
-        parsePromotion?.map(item => {
-            if (item !== null) {
-                return item.id
-            }
-        })
 
     const ckWarantyIds =
         product &&
@@ -349,34 +329,6 @@ export default function ProductDetail(props) {
                                                 </ul>
                                             </div>
                                         </div>
-                                        {ckPromotionIds ? (
-                                            <div className='product-detail__promotion'>
-                                                <strong>KHUYẾN MÃI</strong>
-                                                <ul className='promotion'>
-                                                    {allPromotions !== null &&
-                                                        allPromotions !== undefined &&
-                                                        Object.values(allPromotions)?.map((ckPromotion, idx) => {
-                                                            if (ckPromotionIds?.includes(ckPromotion.id)) {
-                                                                return (
-                                                                    <li className='promotion__item' key={idx}>
-                                                                        <span className='bag'>KM {idx}</span>
-                                                                        <span className='promotion__detail'>
-                                                                            {ckPromotion.promotion_text}
-                                                                        </span>
-                                                                        <Link href='/xem-them-khuyen-mai'>
-                                                                            <a className='promotion__link'>
-                                                                                Xem thêm&gt;&gt;
-                                                                            </a>
-                                                                        </Link>
-                                                                    </li>
-                                                                )
-                                                            }
-                                                        })}
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                            ''
-                                        )}
                                         <div className='product-detail__purchase'>
                                             <div className='purchase'>
                                                 <button
@@ -576,65 +528,6 @@ export default function ProductDetail(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        {ckPromotionIds ? (
-                                            <div className='product-detail__promotion'>
-                                                <strong>
-                                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                        {loading && (
-                                                            <Skeleton width={90} style={{ marginRight: '10px' }} />
-                                                        )}
-                                                    </SkeletonTheme>
-                                                </strong>
-                                                <ul className='promotion'>
-                                                    <li className='promotion__item' style={{ display: 'flex' }}>
-                                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                            {loading && (
-                                                                <Skeleton width={30} style={{ marginRight: '10px' }} />
-                                                            )}
-                                                        </SkeletonTheme>
-                                                        <span className='promotion__detail'>
-                                                            <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                                {loading && (
-                                                                    <Skeleton
-                                                                        style={{ marginRight: '10px' }}
-                                                                        className='promotion__detail--seleketon'
-                                                                    />
-                                                                )}
-                                                            </SkeletonTheme>
-                                                        </span>
-                                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                            {loading && (
-                                                                <Skeleton width={90} style={{ marginRight: '10px' }} />
-                                                            )}
-                                                        </SkeletonTheme>
-                                                    </li>
-                                                    <li className='promotion__item' style={{ display: 'flex' }}>
-                                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                            {loading && (
-                                                                <Skeleton width={30} style={{ marginRight: '10px' }} />
-                                                            )}
-                                                        </SkeletonTheme>
-                                                        <span className='promotion__detail'>
-                                                            <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                                {loading && (
-                                                                    <Skeleton
-                                                                        style={{ marginRight: '10px' }}
-                                                                        className='promotion__detail--seleketon'
-                                                                    />
-                                                                )}
-                                                            </SkeletonTheme>
-                                                        </span>
-                                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                                            {loading && (
-                                                                <Skeleton width={90} style={{ marginRight: '10px' }} />
-                                                            )}
-                                                        </SkeletonTheme>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                            ''
-                                        )}
                                         <div className='product-detail__purchase'>
                                             <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
                                                 {loading && (

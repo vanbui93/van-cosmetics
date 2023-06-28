@@ -5,12 +5,12 @@ import LayoutUser from '../../layouts/LayoutUser'
 import { getComments } from '../../store/actions/cmt'
 import { getMain } from '../../store/actions/main'
 import { getProduct } from '../../store/actions/products'
-import { getPromotions } from '../../store/actions/promotions'
 import { getSlides } from '../../store/actions/slides'
 import CoreValue from '../CoreValue'
 import CustomerCmt from '../CustomerCmt'
 import HomeProduct from '../HomeProduct'
 import HomeSlide from '../HomeSlide'
+import HomeCatergory from '../HomeCatergory'
 function HomePage(props) {
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.data)
@@ -27,16 +27,13 @@ function HomePage(props) {
     }, [])
 
     useEffect(() => {
-        dispatch(getPromotions())
-    }, [])
-
-    useEffect(() => {
         dispatch(getComments())
     }, [])
 
     return (
         <LayoutUser>
             <HomeSlide slideImage={allSlides} />
+            <HomeCatergory />
             <HomeProduct products={products} />
             <CustomerCmt comments={cmts} />
             <CoreValue coreValue={mainData} />

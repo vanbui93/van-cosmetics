@@ -25,7 +25,6 @@ const HomeProduct = props => {
                 const comparePrice = item.compare_price ? item.compare_price : ''
                 const newPercent = item.newBox ? item.newBox : ''
                 const fullbox = item.fullbox ? item.fullbox : ''
-                const promotions = item.promotions ? JSON.parse(item.promotions) : []
                 const isDisplay = item.isDisplay ? item.isDisplay : ''
                 arrayHomeProduct.push({
                     id: id,
@@ -35,7 +34,6 @@ const HomeProduct = props => {
                     images: images,
                     newPercent: newPercent,
                     fullbox: fullbox,
-                    promotions: promotions,
                     isDisplay: isDisplay,
                 })
             }
@@ -60,7 +58,6 @@ const HomeProduct = props => {
                         comparePrice={item.compare_price}
                         images={item.images}
                         newPercent={item.newPercent}
-                        promotions={item.promotions}
                     />
                 )
             )
@@ -69,12 +66,37 @@ const HomeProduct = props => {
 
     return (
         <section className='collections'>
+            <div className='home-sale container'>
+                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
+                    {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
+                </SkeletonTheme>
+                <div className='home-sale-area' style={{ display: loading ? 'none' : undefined }}>
+                    <h3 className='home-sale-subtit'>
+                        <a href='/collections/khuyen-mai' className='home-sale-link'>
+                            <img src={'/assets/img/sale-off.webp'} alt='Sản phẩm khuyến mãi'/>
+                        </a>
+                    </h3>
+                    <div className='count-down'>
+                        <span className='count-down-tit'>Thời gian còn lại</span>
+                        <div className='count-down-time'>
+                            <span className='count-down-date'><span className='count-down-number'>00</span> NGÀY</span>
+                            <span className='count-down-hour'><span className='count-down-number'>03</span> GIỜ</span>
+                            <span className='count-down-minute'><span className='count-down-number'>37</span> PHÚT</span>
+                            <span className='count-down-second'><span className='count-down-number'>46</span> GIÂY</span>
+                        </div>
+                    </div>
+                    <div className='see-all'>
+                        <a className='see-all-link'>Xem tất cả</a>
+                    </div>
+                </div>
+                <ul className='collections__list'>{getDulieu(1, 15)}</ul>
+            </div>
             <div className='home-collect01 container'>
                 <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>iPhone Đã sử dụng</h3>
+                    <h3>KEM CHỐNG NẮNG</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu(1, 15)}</ul>
             </div>
@@ -83,7 +105,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>iPhone New FullBox</h3>
+                    <h3>THỰC PHẨM CHỨC NĂNG</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu(2, 15)}</ul>
             </div>

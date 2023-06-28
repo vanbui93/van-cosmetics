@@ -1,3 +1,70 @@
+.home-sale {
+    border-radius: 21px;
+    margin-bottom: 100px;
+    padding: 20px 40px;
+    background: rgb(201, 246, 251);
+
+    &-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 30px;
+    }
+
+    &-link {
+        display: block;
+
+        >img {
+            display: block;
+            height: 60px;
+        }
+    }
+
+    .count-down {
+        margin-left: 60px;
+
+        &-time {
+            padding: 5px 0px;
+            border-radius: 10px;
+            display: flex;
+            background: rgb(255, 255, 255);
+
+            >span {
+                font-weight: bold;
+                padding: 0px 20px;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                color: rgb(252, 155, 0);
+            }
+        }
+
+        &-number {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        &-tit {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    }
+
+    .see-all {
+        display: flex;
+
+        &-link {
+            background: rgb(255, 255, 255);
+            color: rgb(252, 155, 0);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid #5fd17f;
+            box-shadow: 0 2px 0 rgba(0, 0, 0, .015);
+        }
+    }
+}
+
 .home-collect01 {
     margin-bottom: 25px;
 }

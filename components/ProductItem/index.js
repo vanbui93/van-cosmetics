@@ -3,19 +3,12 @@ import { useEffect, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMenu } from '../../store/actions/menu'
-import { getPromotions } from '../../store/actions/promotions'
 import { numberInputFormat } from '../../utils/numberInputFormat'
 
 export default function ProductItem(props) {
-    const { id, name, price, comparePrice, newPercent, images, promotions } = props
+    const { id, name, price, comparePrice, newPercent, images } = props
     const imgObject = JSON.parse(images)
-    const allPromotions = useSelector(state => state.promotions.data)
     const mainData = useSelector(state => state.main.data)
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getPromotions())
-    }, [])
 
     const img = []
     imgObject !== null &&
@@ -35,16 +28,6 @@ export default function ProductItem(props) {
                 }
             })
     }
-
-    const ckPromotionIds =
-        promotions !== null &&
-        promotions !== undefined &&
-        promotions.length &&
-        promotions?.map(item => {
-            if (item !== null) {
-                return item.id
-            }
-        })
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -84,37 +67,6 @@ export default function ProductItem(props) {
                             )}
                         </p>
                     </div>
-                    {ckPromotionIds ? (
-                        <div className='collections__promotion' style={{ display: loading ? 'none' : undefined }}>
-                            <div className='promotion'>
-                                <div className='promotion__item'>
-                                    <span className='bag'>KM</span>
-                                    {getPromoDefault(promotions)}
-                                    <strong className='promotion__other'>
-                                        VÀ {promotions ? promotions.length : ''} KM KHÁC
-                                    </strong>
-                                </div>
-                            </div>
-                            <ul className='promo-list'>
-                                {allPromotions !== null &&
-                                    allPromotions !== undefined &&
-                                    Object.values(allPromotions)?.map((item, idx) => {
-                                        if (ckPromotionIds?.includes(item.id)) {
-                                            return (
-                                                item && (
-                                                    <li className='promo-list__item' key={idx}>
-                                                        <span className='bag'>KM</span>
-                                                        <span className='promotion__detail'>{item.promotion_text}</span>
-                                                    </li>
-                                                )
-                                            )
-                                        }
-                                    })}
-                            </ul>
-                        </div>
-                    ) : (
-                        ''
-                    )}
                 </a>
             </Link>
         </li>
@@ -131,9 +83,6 @@ export default function ProductItem(props) {
                     {loading && <Skeleton className='collections__price--sekeleton' />}
                 </SkeletonTheme>
             </div>
-            <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                {loading.length > 0 && <Skeleton className='collections__promotion--sekeleton' />}
-            </SkeletonTheme>
         </li>
     )
 }

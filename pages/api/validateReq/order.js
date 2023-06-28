@@ -16,7 +16,6 @@ const orderValidation = data => {
         product_newBox: Joi.number().optional().allow(''),
         sku: Joi.string().optional().allow(''),
         color: Joi.string().optional().allow(''),
-        promotion: Joi.string().optional().allow(''),
     })
     return orderSchme.validate(data)
 }

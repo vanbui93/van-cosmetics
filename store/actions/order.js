@@ -59,7 +59,6 @@ export const addOrderObject = order => async dispatch => {
             product_fullbox: order.product_fullbox,
             sku: order.sku,
             color: order.color,
-            promotion: order.promotion,
         }
 
         const addMethod = {
@@ -142,7 +141,6 @@ export const updateOrder = order => async dispatch => {
             product_price: order.product_price,
             sku: order.sku,
             color: order.color,
-            promotion: JSON.stringify(order.promotion),
         }
 
         const updateMethod = {
