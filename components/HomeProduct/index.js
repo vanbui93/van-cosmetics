@@ -17,14 +17,13 @@ const HomeProduct = props => {
     data !== null &&
         data !== undefined &&
         Object.values(data)?.map(item => {
-            if (item !== null && item.fullbox) {
+            if (item !== null) {
                 const id = item.id ? item.id : ''
                 const images = item.images ? item.images : ''
                 const name = item.name ? item.name : ''
                 const price = item.price ? item.price : ''
                 const comparePrice = item.compare_price ? item.compare_price : ''
                 const newPercent = item.newBox ? item.newBox : ''
-                const fullbox = item.fullbox ? item.fullbox : ''
                 const isDisplay = item.isDisplay ? item.isDisplay : ''
                 arrayHomeProduct.push({
                     id: id,
@@ -33,21 +32,14 @@ const HomeProduct = props => {
                     comparePrice: comparePrice,
                     images: images,
                     newPercent: newPercent,
-                    fullbox: fullbox,
                     isDisplay: isDisplay,
                 })
             }
         })
 
     const currentList = [...arrayHomeProduct]
-    const getDulieu = (fullbox, litmits) => {
-        const arrFullbox = currentList?.filter(item => {
-            if (fullbox === item.fullbox) {
-                return item
-            }
-        })
-
-        return arrFullbox.slice(0, litmits).map((item, idx) => {
+    const getDulieu = (litmits) => {
+        return currentList?.filter(item => item).slice(0, litmits).map((item, idx) => {
             return (
                 item?.isDisplay === 1 && (
                     <ProductItem

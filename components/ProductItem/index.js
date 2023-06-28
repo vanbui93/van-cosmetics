@@ -19,16 +19,6 @@ export default function ProductItem(props) {
             }
         })
 
-    const getPromoDefault = promoDefault => {
-        const promo = []
-        promoDefault !== undefined &&
-            Object.values(promoDefault)?.map(item => {
-                if (item !== null) {
-                    promo.push(item)
-                }
-            })
-    }
-
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         if (Object.values(mainData)?.length > 0) {
@@ -42,15 +32,6 @@ export default function ProductItem(props) {
                 <a>
                     <div className='collections__img' style={{ display: loading ? 'none' : undefined }}>
                         <img src={img[0]} alt='' />
-                    </div>
-                    <div className='collections__sticker'>
-                        {newPercent ? (
-                            <p className='collections__percent-pin'>
-                                <span>new: {newPercent}%</span>
-                            </p>
-                        ) : (
-                            ''
-                        )}
                     </div>
                     <div className='collections__info'>
                         <h4 className='collections__title' style={{ display: loading ? 'none' : undefined }}>

@@ -12,7 +12,6 @@ const orderValidation = data => {
         product_name: Joi.string().required(),
         product_image: Joi.string(),
         product_price: Joi.number().optional().allow(''),
-        product_fullbox: Joi.number().optional().allow(''),
         product_newBox: Joi.number().optional().allow(''),
         sku: Joi.string().optional().allow(''),
         color: Joi.string().optional().allow(''),

@@ -56,7 +56,6 @@ export const addOrderObject = order => async dispatch => {
             product_image: order.product_image,
             product_price: order.product_price,
             product_newBox: order.product_newBox,
-            product_fullbox: order.product_fullbox,
             sku: order.sku,
             color: order.color,
         }
@@ -137,7 +136,6 @@ export const updateOrder = order => async dispatch => {
             product_name: order.product_name,
             product_image: order.product_image,
             product_newBox: order.product_newBox,
-            product_fullbox: order.product_fullbox,
             product_price: order.product_price,
             sku: order.sku,
             color: order.color,

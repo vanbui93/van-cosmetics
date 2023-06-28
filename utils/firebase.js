@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
-import { getStorage, ref, uploadBytes } from 'firebase/storage'
+import { getStorage } from 'firebase/storage'
 import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {

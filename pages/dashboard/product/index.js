@@ -90,7 +90,6 @@ const AdminProduct = props => {
         compare_price: '',
         collection: '',
         newBox: '',
-        fullbox: '',
         colors: [],
         skus: [],
         videos: [],
@@ -117,7 +116,6 @@ const AdminProduct = props => {
                 const price = item.price ? item.price : ''
                 const compare_price = item.compare_price ? item.compare_price : ''
                 const newBox = item.newBox ? item.newBox : ''
-                const fullbox = item.fullbox ? item.fullbox : ''
                 const colors = item.colors ? JSON.parse(item.colors) : []
                 const warantys = item.warantys ? JSON.parse(item.warantys) : []
                 const skus = item.skus ? JSON.parse(item.skus) : []
@@ -133,7 +131,6 @@ const AdminProduct = props => {
                     price: price,
                     compare_price: compare_price,
                     newBox: newBox,
-                    fullbox: fullbox,
                     colors: colors,
                     skus: skus,
                     warantys: warantys,
@@ -518,7 +515,6 @@ const AdminProduct = props => {
                                         <StyledTableCell>Tên sản phẩm</StyledTableCell>
                                         <StyledTableCell align='left'>Hình sản phẩm</StyledTableCell>
                                         <StyledTableCell align='left'>Nhóm sản phẩm</StyledTableCell>
-                                        <StyledTableCell align='left'>FullBox</StyledTableCell>
                                         <StyledTableCell align='left'>Giá</StyledTableCell>
                                         <StyledTableCell align='left'>New</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày tạo</StyledTableCell>
@@ -540,9 +536,6 @@ const AdminProduct = props => {
                                                     {getImgThumb(product?.images)}
                                                 </StyledTableCell>
                                                 <StyledTableCell>{product?.collection}</StyledTableCell>
-                                                <StyledTableCell>
-                                                    {product?.fullbox === 1 ? 'Đã sử dụng' : 'Mới fullbox'}
-                                                </StyledTableCell>
                                                 <StyledTableCell align='left'>
                                                     {product?.price
                                                         ? `${numberInputFormat(product?.price.toString())} đ`
@@ -840,25 +833,6 @@ const AdminProduct = props => {
                                         ) : (
                                             ''
                                         )}
-                                        <TableRow>
-                                            <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                FullBox ?
-                                            </TableCell>
-                                            <TableCell>
-                                                <FormControl>
-                                                    <Select
-                                                        labelId='demo-simple-select-label'
-                                                        id='demo-simple-select'
-                                                        value={editObject.fullbox}
-                                                        name='fullbox'
-                                                        onChange={handleEditOnchage}
-                                                    >
-                                                        <MenuItem value={1}>Đã sử dụng</MenuItem>
-                                                        <MenuItem value={2}>FullBox</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </TableCell>
-                                        </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
                                                 Video

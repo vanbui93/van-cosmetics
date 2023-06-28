@@ -59,7 +59,6 @@ const AdminOrder = props => {
         price: '',
         collection: '',
         newBox: '',
-        product_fullbox: '',
         notes: '',
     })
 
@@ -77,7 +76,6 @@ const AdminOrder = props => {
         sku: '',
         color: '',
         product_newBox: '',
-        product_fullbox: '',
     })
 
     const result = JSON.stringify(orders)
@@ -93,7 +91,6 @@ const AdminOrder = props => {
                 const productImg = item.product_image ? item.product_image : ''
                 const productPrice = item.product_price ? item.product_price : ''
                 const productNewBox = item.product_newBox ? item.product_newBox : ''
-                const productFullBox = item.product_fullbox ? item.product_fullbox : ''
                 const productColor = item.color ? item.color : ''
                 const productType = item.sku ? item.sku : ''
                 const name = item.customer_name ? item.customer_name : ''
@@ -110,7 +107,6 @@ const AdminOrder = props => {
                     img: productImg,
                     price: productPrice,
                     newBox: productNewBox,
-                    product_fullbox: productFullBox,
                     sku: productType,
                     color: productColor,
                     cusName: name,
@@ -224,7 +220,6 @@ const AdminOrder = props => {
             sku: order.sku ? order.sku : '',
             color: order.color ? order.color : '',
             product_newBox: order.newBox,
-            product_fullbox: order.product_fullbox,
         })
     }
 
@@ -261,7 +256,6 @@ const AdminOrder = props => {
                 sku: editObject.sku,
                 color: editObject.color,
                 newBox: editObject.product_newBox,
-                product_fullbox: editObject.product_fullbox,
             })
         } catch (err) {
             console.log(err)
@@ -499,14 +493,6 @@ const AdminOrder = props => {
                                                         {numberInputFormat(viewObject.price.toString())}
                                                     </TableCell>
                                                 </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Tình trạng mới
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {viewObject.product_fullbox === 1 ? 'Đã sử dụng' : 'Fullbox'}
-                                                    </TableCell>
-                                                </TableRow>
                                                 {viewObject.newBox ? (
                                                     <TableRow>
                                                         <TableCell className={classes.tbHeadLeft} variant='head'>
@@ -695,25 +681,6 @@ const AdminOrder = props => {
                                                                 />
                                                             </Grid>
                                                         </Grid>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Tình trạng mới
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <FormControl>
-                                                            <Select
-                                                                labelId='demo-simple-select-label'
-                                                                id='demo-simple-select'
-                                                                defaultValue={editObject.product_fullbox}
-                                                                name='product_fullbox'
-                                                                onChange={handleEditOnchage}
-                                                            >
-                                                                <MenuItem value={1}>Đã sử dụng</MenuItem>
-                                                                <MenuItem value={2}>Fullbox</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>

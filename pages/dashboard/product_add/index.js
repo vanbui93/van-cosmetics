@@ -47,7 +47,6 @@ const ProductAdd = props => {
         compare_price: '',
         collection: '',
         newBox: '',
-        fullbox: '',
         colors: [],
         warantys: [],
         skus: [],
@@ -547,26 +546,6 @@ const ProductAdd = props => {
                                                 />
                                             </Grid>
                                         ))}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    FullBox ?
-                                </TableCell>
-                                <TableCell>
-                                    <FormControl>
-                                        <Select
-                                            labelId='demo-simple-select-label'
-                                            id='demo-simple-select'
-                                            defaultValue={1}
-                                            name='fullbox'
-                                            value={addProduct.fullbox}
-                                            onChange={handleEditOnchage}
-                                        >
-                                            <MenuItem value={1}>Đã sử dụng</MenuItem>
-                                            <MenuItem value={2}>FullBox</MenuItem>
-                                        </Select>
-                                    </FormControl>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
